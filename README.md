@@ -36,3 +36,6 @@ Giải thích các thông số:
 "temperature": Tham số này điều chỉnh mức độ đa dạng của câu trả lời. Khi giá trị này cao, mô hình sẽ tạo ra các câu trả lời mang tính đa dạng và sáng tạo. Các từ được chọn có thể không liên quan hoặc có sự sáng tạo hơn, tạo nên các câu trả lời độc đáo. Khi giá trị này thấp, mô hình sẽ tạo ra các câu trả lời chính xác và cố định hơn. Các từ được chọn sẽ theo xu hướng phổ biến hơn và câu trả lời sẽ ít đa dạng hơn. Giá trị này nên đặt từ 0.3 đến 0.5
 
 "API Key": nhập API keey của Open AI, https://platform.openai.com/account/api-keys
+
+## Viết content
+Nhập từ khóa, topic và các thông số, sau đó nhấn nút "Write content", mô hình sẽ tạo ra nội dung dựa vào từ khóa đã nhập.
