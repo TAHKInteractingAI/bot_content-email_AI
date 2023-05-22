@@ -17,4 +17,3 @@ python email_ai.py
 ```
 ## Viết email
 Nhập các thông tin trên giao diện chương trình như: tên người nhận, người gửi, từ khóa, chủ đề email, chọn ngôn ngữ
-Các thông số cần nhập: ``` max_tokens ```
