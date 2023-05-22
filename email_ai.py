@@ -1,6 +1,6 @@
 import openai
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QComboBox, QPushButton, QVBoxLayout, QInputDialog, QTextEdit, QMessageBox
-class EmailGenerator(QWidget):
+class Generator(QWidget):
     def __init__(self):
         super().__init__()
         #openai.api_key = ""
@@ -25,6 +25,7 @@ class EmailGenerator(QWidget):
         self.temperature_button = QPushButton("Set temperature")
         self.api_key_button = QPushButton("Set API Key")
         self.generate_button = QPushButton("Generate Email")
+        self.write_content_button = QPushButton("Write Content")
         self.result_textedit = QTextEdit()
         #self.result_label = QLabel()
         
@@ -52,10 +53,12 @@ class EmailGenerator(QWidget):
         self.layout.addWidget(self.temperature_button)
         self.layout.addWidget(self.api_key_button)
         self.layout.addWidget(self.generate_button)
+        self.layout.addWidget(self.write_content_button)
         self.layout.addWidget(self.result_textedit)
         self.setLayout(self.layout)
         
         self.generate_button.clicked.connect(self.generate_email)
+        self.write_content_button.clicked.connect(self.write_content)
         self.show()
         # Set default values
         self.max_tokens = None
@@ -136,11 +139,43 @@ class EmailGenerator(QWidget):
         )
         email_text = response["choices"][0]["text"]
         self.result_textedit.setPlainText(email_text)
-        #self.result_label.setText(email_text)
+    def write_content(self):
+        if self.max_tokens is None:
+            QMessageBox.warning(self, "Warning", "Bạn cần nhập max tokens trước khi tạo email")
+            return
+        if self.n is None:
+            QMessageBox.warning(self, "Warning", "Bạn cần nhập n trước khi tạo email")
+            return
+        if self.temperature is None:
+            QMessageBox.warning(self, "Warning", "Bạn cần nhập temperature trước khi tạo email")
+            return
+        if self.api_key is None:
+            QMessageBox.warning(self, "Warning", "Bạn cần nhập API Key trước khi tạo email")
+            return
 
+        keywords = self.keywords_edit.text()
+        topic = self.topic_edit.text()
+        language = self.language_combo.currentText()
+
+        if language == "English":
+            prompt = (f"Write an article about {topic} using the following keywords: {keywords}")
+        else:
+            prompt = (f"Viết một bài viết về {topic} sử dụng từ khóa: {keywords}")
+
+        response = openai.Completion.create(
+            engine="text-davinci-003",
+            prompt=prompt,
+            max_tokens=self.max_tokens,
+            n =self.n,
+            stop=self.stop,
+            temperature=self.temperature
+        )
+        email_text = response["choices"][0]["text"]
+        self.result_textedit.setPlainText(email_text)
 
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
-    email_generator = EmailGenerator()
+    generator = Generator()
+    #write_content = EmailGenerator()
     sys.exit(app.exec_())
