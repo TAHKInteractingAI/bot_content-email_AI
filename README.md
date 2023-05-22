@@ -1,1 +1,1 @@
-# -tahk_interacting_AI
+# Viết email sử dụng API của OpenAI
